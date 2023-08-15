@@ -47,11 +47,16 @@ public class UserService {
     }
 
     public void createNewUser(String username, String password) {
+        int userCount = userRepository.findAll().size();
+        UserRoles role = UserRoles.ROLE_USER;
+        if (userCount == 0){
+            role = UserRoles.ROLE_ADMIN;
+        }
         UserDTO userDTO = UserDTO.builder()
             .userName(username)
             .password(password)
             .isEnable(true)
-            .role(UserRoles.ROLE_USER)
+            .role(role)
             .build();
         userValidator.setUserService(this);
         userValidator.validate(userDTO, true);

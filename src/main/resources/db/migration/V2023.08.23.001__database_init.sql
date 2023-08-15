@@ -40,7 +40,3 @@ CREATE TABLE users (
 );
 
 create unique index ix_users_user_name   on users (username);
-
-
-INSERT INTO users (username, password, role)
-VALUES ('admin', '$2a$10$5qBqaBeWBCgn61.C1A7MtejTofjljRTMsLs5NhG55cQ2sSeGIZA0u', 'ROLE_ADMIN');
