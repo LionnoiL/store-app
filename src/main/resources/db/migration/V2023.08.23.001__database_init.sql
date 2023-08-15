@@ -33,14 +33,14 @@ create TABLE orders_detail (
 
 CREATE TABLE users (
 	id                      bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	user_name               VARCHAR(255),
+	username               VARCHAR(255),
 	password                VARCHAR(255),
 	role                    VARCHAR(36) NOT NULL,
 	enabled                 BOOLEAN DEFAULT false
 );
 
-create unique index ix_users_user_name   on users (user_name);
+create unique index ix_users_user_name   on users (username);
 
 
-INSERT INTO users (user_name, password, role)
+INSERT INTO users (username, password, role)
 VALUES ('admin', '$2a$10$5qBqaBeWBCgn61.C1A7MtejTofjljRTMsLs5NhG55cQ2sSeGIZA0u', 'ROLE_ADMIN');
