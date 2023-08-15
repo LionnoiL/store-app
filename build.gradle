@@ -29,6 +29,7 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
+	implementation 'org.apache.commons:commons-lang3:3.13.0'
 
 
 
