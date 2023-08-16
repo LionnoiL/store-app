@@ -29,7 +29,7 @@ create TABLE orders_detail (
 
 CREATE TABLE users (
 	id                      bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	username               VARCHAR(255),
+	username                VARCHAR(255),
 	password                VARCHAR(255),
 	role                    VARCHAR(36) NOT NULL,
 	enabled                 BOOLEAN DEFAULT false

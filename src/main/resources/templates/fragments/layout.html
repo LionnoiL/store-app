@@ -5,6 +5,8 @@
 <head lang="en" th:fragment="header">
   <base href="/">
   <meta charset="UTF-8">
+
+  <meta http-equiv="Refresh" th:content="${reloadTime==null ? '86400' : reloadTime}" />
   <title>Склад</title>
 
   <link rel="stylesheet" href="css/store.css">
