@@ -1,4 +1,4 @@
-package ua.gaponov.store.catalog;
+package ua.gaponov.store.orders;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,17 +8,17 @@ import org.springframework.stereotype.Service;
  */
 @RequiredArgsConstructor
 @Service
-public class ProductServiceImpl implements ProductService{
+public class OrderServiceImpl implements OrderService {
 
-    private ProductRepository productRepository;
+    private OrderRepository orderRepository;
 
     @Override
-    public ProductDto getByGuid(String productGuid) {
+    public OrderDto getByGuid(String productGuid) {
         return null;
     }
 
     @Override
-    public void add(ProductDto productDto) {
+    public void add(OrderDto orderDto) {
 
     }
 
@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void update(ProductDto productDto) {
+    public void update(OrderDto orderDto) {
 
     }
 }

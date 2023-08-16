@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
 	implementation 'org.apache.commons:commons-lang3:3.13.0'
+	implementation 'org.jsoup:jsoup:1.16.1'
 
 
 
