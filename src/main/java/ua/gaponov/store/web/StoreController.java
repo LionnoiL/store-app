@@ -1,6 +1,7 @@
 package ua.gaponov.store.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,15 @@ public class StoreController {
 
     private final UtpService utpService;
 
+    @Value("${orders.list.reload.interval}")
+    private int reloadPageInterval;
+
     @GetMapping("/list")
     public ModelAndView getMainPage() {
         ModelAndView result = new ModelAndView("orders/list");
         List<OrderRequestDto> ordersList = utpService.getOrdersList();
         result.addObject("ordersList", ordersList);
-        result.addObject("reloadTime", 180);
+        result.addObject("reloadTime", reloadPageInterval);
         return result;
     }
 }
