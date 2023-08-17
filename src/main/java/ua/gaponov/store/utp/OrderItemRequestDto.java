@@ -18,4 +18,5 @@ public class OrderItemRequestDto {
     private String productQty;
     private String productPrice;
     private String productSum;
+    private String productQtyComplete;
 }

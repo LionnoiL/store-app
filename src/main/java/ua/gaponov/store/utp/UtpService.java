@@ -38,10 +38,29 @@ public class UtpService {
 
             String response = Jsoup.connect(url)
                     .header("Authorization", "Basic " + base64login)
+                    .timeout(30000)
                     .ignoreContentType(true).get().body().text();
             List<OrderRequestDto> ordersList = JsonConverter.convertJsonStringToList(
                     response, OrderRequestDto.class);
             return ordersList;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public OrderRequestDto getOrder(String orderGuid) {
+        User currentUser = userService.getCurrentUser();
+        try {
+            String url = utpHttpServerUrl + "?userName=" + currentUser.getUserName() + "&orderGuid=" + orderGuid;
+            String login = userName + ":" + userPassword;
+            String base64login = Base64.getEncoder().encodeToString(login.getBytes());
+
+            String response = Jsoup.connect(url)
+                    .header("Authorization", "Basic " + base64login)
+                    .ignoreContentType(true).get().body().text();
+            OrderRequestDto order = JsonConverter.GSON.fromJson(response, OrderRequestDto.class);
+            return order;
 
         } catch (IOException e) {
             throw new RuntimeException(e);

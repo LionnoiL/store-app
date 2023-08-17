@@ -32,7 +32,7 @@
                         <div th:each="order, iStat: ${ordersList}">
                             <tr>
                                 <th scope="row" th:text="${iStat.index} + 1"></th>
-                                <td><a th:href="@{/order/view(id=${order.docGuid})}"><div  th:text="${order.docNumber}"></div></a></td>
+                                <td><a th:href="@{/orders/edit(id=${order.docGuid})}"><div  th:text="${order.docNumber}"></div></a></td>
                                 <td th:text="${order.docDate}"></td>
                                 <td th:text="${order.docClient}"></td>
                                 <td th:text="${order.docPointName}"></td>

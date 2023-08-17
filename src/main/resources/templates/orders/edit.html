@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Редагування замовлення</title>
+</head>
+
+<div layout:fragment="content" th:remove="tag">
+    <div class="content-wrapper content">
+
+        <div class="row ml-auto mr-auto">
+            <div class="col-md-3">
+
+                <form>
+                    <div class="form-group">
+                        <label for="docNumber">Номер</label>
+                        <input type="text" class="form-control" id="docNumber" th:value="${order.docNumber}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="docDate">Дата</label>
+                        <input type="text" class="form-control" id="docDate" th:value="${order.docDate}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="docAgent">Агент</label>
+                        <input type="text" class="form-control" id="docAgent" th:value="${order.docAgent}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="docClient">Контрагент</label>
+                        <input type="text" class="form-control" id="docClient" th:value="${order.docClient}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="docPointName">Торгова точка</label>
+                        <input type="text" class="form-control" id="docPointName" th:value="${order.docPointName}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="docPointAddress">Адреса доставки</label>
+                        <input type="text" class="form-control" id="docPointAddress" th:value="${order.docPointAddress}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="docTotalSum">Сума документу</label>
+                        <input type="text" class="form-control" id="docTotalSum" th:value="${order.docTotalSum}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="docComment">Коментар</label>
+                        <input type="text" class="form-control" id="docComment" th:value="${order.docComment}" disabled>
+                    </div>
+
+                </form>
+
+
+
+            </div>
+
+            <div class="col-md-9">
+
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width:50px;" scope="col">#</th>
+                            <th scope="col">Номенклатура</th>
+                            <th style="width:50px;" scope="col">Од.</th>
+                            <th style="width:100px;" scope="col">Ціна</th>
+                            <th style="width:100px;" scope="col">Кількість</th>
+                            <th style="width:100px;" scope="col">Сума</th>
+                            <th style="width:100px;" scope="col">Зібрано</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:each="orderItem, iStat: ${order.products}">
+                            <tr class="table-row">
+                                <th scope="row" th:text="${iStat.index} + 1"></th>
+                                <td class="h2" th:text="${orderItem.productName}"></td>
+                                <td th:text="${orderItem.productUnitName}"></td>
+                                <td th:text="${orderItem.productPrice}"></td>
+                                <td class="h1" th:text="${orderItem.productQty}"></td>
+                                <td th:text="${orderItem.productSum}"></td>
+                                <td>
+                                    <input style="font-size:24px;" type="text" class="form-control" th:value="${orderItem.productQtyComplete}">
+                                </td>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div id="orderModal" class="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="orderModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Закрити</button>
+                </div>
+                <div id="orderDetails" class="modal-body">
+
+                    <input type="text" class="form-control" id="modalOrderGuid" disabled>
+
+                    <div class="form-group">
+                        <label for="modalProductName">Номенклатура</label>
+                        <input type="text" class="form-control" id="modalProductName" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalProductQty">Кількість замовлено</label>
+                        <input type="text" class="form-control" id="modalProductQty" disabled>
+                    </div>
+
+
+
+                </div>
+                <div id="orderItems" class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script  th:inline="javascript">
+  $(document).ready(function() {
+
+        $('#orderModal').modal({
+        keyboarnd: true,
+        backdrop: "static",
+        show:false,
+        }).on('show.bs.modal', function(){
+            var getDocGuid = $(this).data('docGuid');
+            $(this).find('#modalOrderGuid').val($(getDocGuid).val())
+        });
+
+        $(".table-striped").find('tr[data-target]').on('click', function(){
+             $('#orderModal').data('docGuid',$(this).data('id'));
+        });
+
+  });
+</script>
+
+</div>
+
+</body>
+</html>
