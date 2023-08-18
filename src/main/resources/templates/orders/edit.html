@@ -9,45 +9,55 @@
 <div layout:fragment="content" th:remove="tag">
     <div class="content-wrapper content">
 
+        <form  action="/orders/edit" method="post" th:object="${order}">
+
+            <input type="text" class="form-control" id="guid" name="guid" th:field="${order.docGuid}" hidden>
+
         <div class="row ml-auto mr-auto">
             <div class="col-md-3">
 
-                <form>
+
                     <div class="form-group">
                         <label for="docNumber">Номер</label>
-                        <input type="text" class="form-control" id="docNumber" th:value="${order.docNumber}" disabled>
+                        <input type="text" class="form-control" id="docNumber" name="docNumber" th:field="${order.docNumber}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="docDate">Дата</label>
-                        <input type="text" class="form-control" id="docDate" th:value="${order.docDate}" disabled>
+                        <input type="text" class="form-control" id="docDate" name="docDate" th:field="${order.docDate}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="docAgent">Агент</label>
-                        <input type="text" class="form-control" id="docAgent" th:value="${order.docAgent}" disabled>
+                        <input type="text" class="form-control" id="docAgent" th:field="${order.docAgent}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="docClient">Контрагент</label>
-                        <input type="text" class="form-control" id="docClient" th:value="${order.docClient}" disabled>
+                        <input type="text" class="form-control" id="docClient" th:field="${order.docClient}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="docPointName">Торгова точка</label>
-                        <input type="text" class="form-control" id="docPointName" th:value="${order.docPointName}" disabled>
+                        <input type="text" class="form-control" id="docPointName" th:field="${order.docPointName}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="docPointAddress">Адреса доставки</label>
-                        <input type="text" class="form-control" id="docPointAddress" th:value="${order.docPointAddress}" disabled>
+                        <input type="text" class="form-control" id="docPointAddress" th:field="${order.docPointAddress}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="docTotalSum">Сума документу</label>
-                        <input type="text" class="form-control" id="docTotalSum" th:value="${order.docTotalSum}" disabled>
+                        <input type="text" class="form-control" id="docTotalSum" th:field="${order.docTotalSum}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="docComment">Коментар</label>
-                        <input type="text" class="form-control" id="docComment" th:value="${order.docComment}" disabled>
+                        <input type="text" class="form-control" id="docComment" th:field="${order.docComment}" disabled>
                     </div>
 
-                </form>
 
+
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary m-1" onclick="window.location.href = '/';">Відмова</button>
+                </div>
+                <div class="btn-group float-right mt-2" role="group">
+                    <button type="submit" class="btn btn-success m-1">Зберегти</button>
+                </div>
 
 
             </div>
@@ -65,11 +75,11 @@
                             <th style="width:100px;" scope="col">Ціна</th>
                             <th style="width:100px;" scope="col">Кількість</th>
                             <th style="width:100px;" scope="col">Сума</th>
-                            <th style="width:100px;" scope="col">Зібрано</th>
+                            <th style="width:200px;" scope="col">Зібрано</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <div th:each="orderItem, iStat: ${order.products}">
+                        <div th:each="orderItem, iStat: *{products}">
                             <tr class="table-row">
                                 <th scope="row" th:text="${iStat.index} + 1"></th>
                                 <td class="h2" th:text="${orderItem.productName}"></td>
@@ -78,7 +88,12 @@
                                 <td class="h1" th:text="${orderItem.productQty}"></td>
                                 <td th:text="${orderItem.productSum}"></td>
                                 <td>
-                                    <input style="font-size:24px;" type="text" class="form-control" th:value="${orderItem.productQtyComplete}">
+                                    <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].lineNumber}" hidden>
+                                    <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].productGuid}" hidden>
+                                    <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].productCode}" hidden>
+                                    <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].productName}" hidden>
+                                    <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].productUnitName}" hidden>
+                                    <input style="font-size:24px;" type="number" step="0.001" class="form-control" th:field="*{products[__${iStat.index}__].productQtyComplete}">
                                 </td>
                             </tr>
                         </div>
@@ -89,59 +104,9 @@
 
             </div>
         </div>
+        </form>
     </div>
 
-    <div id="orderModal" class="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="orderModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Закрити</button>
-                </div>
-                <div id="orderDetails" class="modal-body">
-
-                    <input type="text" class="form-control" id="modalOrderGuid" disabled>
-
-                    <div class="form-group">
-                        <label for="modalProductName">Номенклатура</label>
-                        <input type="text" class="form-control" id="modalProductName" disabled>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="modalProductQty">Кількість замовлено</label>
-                        <input type="text" class="form-control" id="modalProductQty" disabled>
-                    </div>
-
-
-
-                </div>
-                <div id="orderItems" class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">Зберегти</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script  th:inline="javascript">
-  $(document).ready(function() {
-
-        $('#orderModal').modal({
-        keyboarnd: true,
-        backdrop: "static",
-        show:false,
-        }).on('show.bs.modal', function(){
-            var getDocGuid = $(this).data('docGuid');
-            $(this).find('#modalOrderGuid').val($(getDocGuid).val())
-        });
-
-        $(".table-striped").find('tr[data-target]').on('click', function(){
-             $('#orderModal').data('docGuid',$(this).data('id'));
-        });
-
-  });
-</script>
 
 </div>
 
