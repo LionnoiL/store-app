@@ -9,7 +9,7 @@
 <div layout:fragment="content" th:remove="tag">
     <div class="content-wrapper content">
 
-        <form  action="/orders/edit" method="post" th:object="${order}">
+        <form  action="/orders/edit" method="post" th:object="${order}" id="order-form">
 
             <input type="text" class="form-control" id="guid" name="guid" th:field="${order.docGuid}" hidden>
 
@@ -56,7 +56,7 @@
                     <button type="button" class="btn btn-primary m-1" onclick="window.location.href = '/';">Відмова</button>
                 </div>
                 <div class="btn-group float-right mt-2" role="group">
-                    <button type="submit" class="btn btn-success m-1">Зберегти</button>
+                    <button type="button" id="save-button" class="btn btn-success m-1">Зберегти</button>
                 </div>
 
 
@@ -93,7 +93,7 @@
                                     <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].productCode}" hidden>
                                     <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].productName}" hidden>
                                     <input type="text" class="form-control" th:field="*{products[__${iStat.index}__].productUnitName}" hidden>
-                                    <input style="font-size:24px;" type="number" step="0.001" class="form-control" th:field="*{products[__${iStat.index}__].productQtyComplete}">
+                                    <input style="font-size:24px;" type="number" id="id_of_input" step="0.001" class="form-control" th:field="*{products[__${iStat.index}__].productQtyComplete}">
                                 </td>
                             </tr>
                         </div>
@@ -107,6 +107,11 @@
         </form>
     </div>
 
+    <script>
+        $("#save-button").click(function() {
+          $("#order-form").submit();
+        });
+    </script>
 
 </div>
 
