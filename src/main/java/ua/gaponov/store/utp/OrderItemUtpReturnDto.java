@@ -12,15 +12,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItemRequestDto {
+public class OrderItemUtpReturnDto {
 
     private int lineNumber;
     private String productGuid;
     private String productCode;
     private String productName;
     private String productUnitName;
-    private String productQty;
-    private String productPrice;
-    private String productSum;
     private double productQtyComplete;
 }
