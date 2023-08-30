@@ -19,8 +19,23 @@ public class OrderItemRequestDto {
     private String productCode;
     private String productName;
     private String productUnitName;
-    private String productQty;
-    private String productPrice;
-    private String productSum;
+    private double productQty;
+    private double productPrice;
+    private double productSum;
     private double productQtyComplete;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderItemRequestDto that = (OrderItemRequestDto) o;
+
+        return productGuid.equals(that.productGuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return productGuid.hashCode();
+    }
 }

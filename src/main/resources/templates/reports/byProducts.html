@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Звіт по товарам</title>
+</head>
+
+<div layout:fragment="content" th:remove="tag">
+    <div class="content-wrapper content">
+
+        <div class="row ml-auto mr-auto">
+            <div class="col-md-12">
+
+                <h3>Звіт по товарам</h3>
+
+                <div style="padding-top: 10px;">
+                    <table border="1">
+
+                        <div th:each="orderItem, iStat: ${products}">
+                            <tr>
+                                <th style="width:40px;" scope="row" th:text="${iStat.index} + 1"></th>
+                                <td style="width:700px;" th:text="${orderItem.productName}"></td>
+                                <td style="width:40px; text-align: center;"
+                                    th:text="${orderItem.productUnitName}"></td>
+                                <td style="width:100px; font-weight: bold; text-align: center;"
+                                    th:text="${#numbers.formatDecimal(orderItem.productQty, 1, 'COMMA',  3, 'POINT')}"></td>
+                                <td style="width:90px"></td>
+                            </tr>
+                        </div>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
